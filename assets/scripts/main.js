@@ -45,7 +45,7 @@ function initializeServiceWorker() {
   // We first must register our ServiceWorker here before any of the code in
   // sw.js is executed.
   // B1. TODO - Check if 'serviceWorker' is supported in the current browser
-  if ('serviceWorker' in navigator) {
+  if ("serviceWorker" in navigator) {
       // B2. TODO - Listen for the 'load' event on the window object.
     window.addEventListener('load', async function() {
       // Steps B3-B6 will be *inside* the event listener's function created in B2
@@ -59,10 +59,10 @@ function initializeServiceWorker() {
       }
               // B5. TODO - In the event that the service worker registration fails, console
       //            log that it has failed.
-      catch (error1) {
-        console.error(`Registration fails with ${error1}`);
+      catch (error) {
+        console.error(`Registration fails with ${error}`);
       }
-    })
+    });
   }
 }
         // STEPS B6 ONWARDS WILL BE IN /sw.js
@@ -79,8 +79,8 @@ async function getRecipes() {
   // EXPOSE - START (All expose numbers start with A)
   // A1. TODO - Check local storage to see if there are any recipes.
   //            If there are recipes, return them.
-  const storedRecipes = localStorage.getItem('recipes');
-  if (storedRecipes != null) {
+  const storedRecipes = JSON.parse(localStorage.getItem('recipes') || '[]');
+  if (storedRecipes.length != 0) {
     return storedRecipes;
   }
   /**************************/
