@@ -45,16 +45,27 @@ function initializeServiceWorker() {
   // We first must register our ServiceWorker here before any of the code in
   // sw.js is executed.
   // B1. TODO - Check if 'serviceWorker' is supported in the current browser
-  // B2. TODO - Listen for the 'load' event on the window object.
-  // Steps B3-B6 will be *inside* the event listener's function created in B2
-  // B3. TODO - Register './sw.js' as a service worker (The MDN article
-  //            "Using Service Workers" will help you here)
-  // B4. TODO - Once the service worker has been successfully registered, console
-  //            log that it was successful.
-  // B5. TODO - In the event that the service worker registration fails, console
-  //            log that it has failed.
-  // STEPS B6 ONWARDS WILL BE IN /sw.js
+  if ('serviceWorker' in navigator) {
+      // B2. TODO - Listen for the 'load' event on the window object.
+    window.addEventListener('load', async function() {
+      // Steps B3-B6 will be *inside* the event listener's function created in B2
+      // B3. TODO - Register './sw.js' as a service worker (The MDN article
+      //            "Using Service Workers" will help you here)
+      try {
+        const registration = await navigator.serviceWorker.register('./sw.js');
+      // B4. TODO - Once the service worker has been successfully registered, console
+      //            log that it was successful.
+        console.log("Service Worker registered successfully.");
+      }
+              // B5. TODO - In the event that the service worker registration fails, console
+      //            log that it has failed.
+      catch (error1) {
+        console.error(`Registration fails with ${error1}`);
+      }
+    })
+  }
 }
+        // STEPS B6 ONWARDS WILL BE IN /sw.js
 
 /**
  * Reads 'recipes' from localStorage and returns an array of
@@ -82,7 +93,7 @@ async function getRecipes() {
   //            function (we call these callback functions). That function will
   //            take two parameters - resolve, and reject. These are functions
   //            you can call to either resolve the Promise or Reject it.
-  return new Promise(async(resolve, reject) => {
+  let newPromise = new Promise(async(resolve, reject) => { 
   /**************************/
   // A4-A11 will all be *inside* the callback function we passed to the Promise
   // we're returning
@@ -116,12 +127,13 @@ async function getRecipes() {
       }
       catch (error) {
         // A10. TODO - Log any errors from catch using console.error
-        console.log("Error caught: ", error);
+        console.error('Error caught: $(error}');
         // A11. TODO - Pass any errors to the Promise's reject() function
         reject(error);
       }
     }
-  })
+    return newPromise;
+  });
 }
 
 /**
