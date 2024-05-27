@@ -2,7 +2,7 @@
     "name": "Lab8-Starter",
     "short_name": "Beijie Cheng",
     "description": "An item for CSE110 Lab8 Explore.",
-    "start_url": "./index.html",
+    "start_url": "",
     "display": "standalone",
     "background_color": "white",
     "theme_color": "blue",
